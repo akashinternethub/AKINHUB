@@ -20,7 +20,6 @@ jobs:
 
     - name: Extract project
       run: |
-        mkdir project
         unzip -q akinhub.zip -d project
 
     - name: Set up Java
