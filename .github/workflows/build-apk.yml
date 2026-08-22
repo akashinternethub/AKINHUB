@@ -8,32 +8,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download project ZIP
-        uses: actions/checkout@v4
+    - name: Download project ZIP
+      uses: actions/checkout@v4
 
-      - name: Extract project
-        run: |
-          mkdir project
-          unzip -q akinhub.zip -d project
+    - name: Create dummy google-services.json
+      run: |
+        mkdir -p project/app/src/debug project/app/src/release
+        echo '{"project_info": {"project_number": "123456789", "project_id": "dummy-project"}, "client": [{"client_info": {"mobilesdk_app_id": "1:123456789:android:123456"}, "oauth_client": [], "services": {"analytics_service": {"status": 1}, "appinvite_service": {"status": 1, "other_platform_oauth_client": []}, "ads_service": {"status": 2}}}]}' > project/app/google-services.json
+        cp project/app/google-services.json project/app/src/debug/google-services.json
+        cp project/app/google-services.json project/app/src/release/google-services.json
 
-      - name: Set up Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '17'
+    - name: Extract project
+      run: |
+        mkdir project
+        unzip -q akinhub.zip -d project
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v6
-        with:
-          gradle-version: '9.3.1'
+    - name: Set up Java
+      uses: actions/setup-java@v5
+      with:
+        distribution: temurin
+        java-version: '17'
 
-      - name: Build Debug APK
-        working-directory: project
-        run: gradle assembleDebug --stacktrace
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v6
+      with:
+        gradle-version: '9.3.1'
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v7
-        with:
-          name: Akash-Internet-Hub-APK
-          path: project/app/build/outputs/apk/debug/*.apk
-          archive: false
+    - name: Build Debug APK
+      working-directory: project
+      run: gradle assembleDebug --stacktrace
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v7
+      with:
+        name: Akash-Internet-Hub-APK
+        path: project/app/build/outputs/apk/debug/*.apk
+        archive: false
