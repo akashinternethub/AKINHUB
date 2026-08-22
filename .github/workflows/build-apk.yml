@@ -11,7 +11,11 @@ jobs:
     - name: Download project ZIP
       uses: actions/checkout@v4
 
-    - name: Create real google-services.json
+    - name: Extract project
+      run: |
+        unzip -q akinhub.zip -d project
+
+    - name: Create real google-services.json and Keystore
       run: |
         mkdir -p project/app/src/debug project/app/src/release
         cat << 'EOF' > project/app/google-services.json
@@ -47,14 +51,9 @@ jobs:
         EOF
         cp project/app/google-services.json project/app/src/debug/google-services.json
         cp project/app/google-services.json project/app/src/release/google-services.json
-
-    - name: Generate Debug Keystore
-      run: |
+        
+        # Generate debug.keystore directly inside project/app/
         keytool -genkey -v -keystore project/app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
-
-    - name: Extract project
-      run: |
-        unzip -q akinhub.zip -d project
 
     - name: Set up Java
       uses: actions/setup-java@v5
