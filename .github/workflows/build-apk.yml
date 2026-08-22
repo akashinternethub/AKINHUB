@@ -15,7 +15,7 @@ jobs:
       run: |
         unzip -q akinhub.zip -d project
 
-    - name: Create real google-services.json and Keystore
+    - name: Setup Google Services and Keystore
       run: |
         mkdir -p project/app/src/debug project/app/src/release
         cat << 'EOF' > project/app/google-services.json
@@ -52,7 +52,7 @@ jobs:
         cp project/app/google-services.json project/app/src/debug/google-services.json
         cp project/app/google-services.json project/app/src/release/google-services.json
         
-        # Generate debug.keystore directly inside project/app/
+        # Ab project extract hone ke baad keystore sahi jagah banega
         keytool -genkey -v -keystore project/app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 
     - name: Set up Java
