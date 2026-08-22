@@ -11,10 +11,40 @@ jobs:
     - name: Download project ZIP
       uses: actions/checkout@v4
 
-    - name: Create dummy google-services.json
+    - name: Create real google-services.json
       run: |
         mkdir -p project/app/src/debug project/app/src/release
-        echo '{"project_info": {"project_number": "123456789", "project_id": "dummy-project"}, "client": [{"client_info": {"mobilesdk_app_id": "1:123456789:android:123456", "android_client_info": {"package_name": "com.aistudio.akinhub.dzrxkp"}}, "oauth_client": [], "services": {"analytics_service": {"status": 1}, "appinvite_service": {"status": 1, "other_platform_oauth_client": []}, "ads_service": {"status": 2}}}]}' > project/app/google-services.json
+        cat << 'EOF' > project/app/google-services.json
+        {
+          "project_info": {
+            "project_number": "655465843475",
+            "project_id": "akinhub-3f2da",
+            "storage_bucket": "akinhub-3f2da.firebasestorage.app"
+          },
+          "client": [
+            {
+              "client_info": {
+                "mobilesdk_app_id": "1:655465843475:android:5dbd08bdb9b2519a0d6e8e",
+                "android_client_info": {
+                  "package_name": "com.aistudio.akinhub.dzrxkp"
+                }
+              },
+              "oauth_client": [],
+              "api_key": [
+                {
+                  "current_key": "AIzaSy8x3T-4y54QN1R2QoaVsW5K43P9QgESgkU"
+                }
+              ],
+              "services": {
+                "appinvite_service": {
+                  "other_platform_oauth_client": []
+                }
+              }
+            }
+          ],
+          "configuration_version": "1"
+        }
+        EOF
         cp project/app/google-services.json project/app/src/debug/google-services.json
         cp project/app/google-services.json project/app/src/release/google-services.json
 
