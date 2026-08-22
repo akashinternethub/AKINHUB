@@ -17,6 +17,7 @@ jobs:
 
     - name: Setup Google Services and Keystore
       run: |
+        # 1. Create google-services.json in app folder
         mkdir -p project/app/src/debug project/app/src/release
         cat << 'EOF' > project/app/google-services.json
         {
@@ -52,8 +53,8 @@ jobs:
         cp project/app/google-services.json project/app/src/debug/google-services.json
         cp project/app/google-services.json project/app/src/release/google-services.json
         
-        # Ab project extract hone ke baad keystore sahi jagah banega
-        keytool -genkey -v -keystore project/app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+        # 2. Generate debug.keystore directly inside project/ root folder
+        keytool -genkey -v -keystore project/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 
     - name: Set up Java
       uses: actions/setup-java@v5
@@ -73,6 +74,6 @@ jobs:
     - name: Upload APK
       uses: actions/upload-artifact@v7
       with:
-        name: Akash-Internet-Hub-APK
+        name: AKINHUB-APK  # <--- Yahan aap APK ka naam apne hisab se badal sakte hain
         path: project/app/build/outputs/apk/debug/*.apk
         archive: false
