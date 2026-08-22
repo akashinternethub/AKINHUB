@@ -14,7 +14,7 @@ jobs:
     - name: Create dummy google-services.json
       run: |
         mkdir -p project/app/src/debug project/app/src/release
-        echo '{"project_info": {"project_number": "123456789", "project_id": "dummy-project"}, "client": [{"client_info": {"mobilesdk_app_id": "1:123456789:android:123456"}, "oauth_client": [], "services": {"analytics_service": {"status": 1}, "appinvite_service": {"status": 1, "other_platform_oauth_client": []}, "ads_service": {"status": 2}}}]}' > project/app/google-services.json
+        echo '{"project_info": {"project_number": "123456789", "project_id": "dummy-project"}, "client": [{"client_info": {"mobilesdk_app_id": "1:123456789:android:123456", "android_client_info": {"package_name": "com.aistudio.akinhub.dzrxkp"}}, "oauth_client": [], "services": {"analytics_service": {"status": 1}, "appinvite_service": {"status": 1, "other_platform_oauth_client": []}, "ads_service": {"status": 2}}}]}' > project/app/google-services.json
         cp project/app/google-services.json project/app/src/debug/google-services.json
         cp project/app/google-services.json project/app/src/release/google-services.json
 
