@@ -29,7 +29,7 @@ jobs:
           "client": [
             {
               "client_info": {
-                "mobilesdk_app_id": "1:655465843475:android:5dbd08bdb9b2519a0d6e8e",
+                "mobilesdk_app_id": "1:655465843475:android:5db686bdb9b2519a06e8e6",
                 "android_client_info": {
                   "package_name": "com.aistudio.akinhub.dzrxkp"
                 }
@@ -37,7 +37,7 @@ jobs:
               "oauth_client": [],
               "api_key": [
                 {
-                  "current_key": "AIzaSy8x3T-4y54QN1R2QoaVsW5K43P9QgESgkU"
+                  "current_key": "AIzaSyBx3T-4y54QN1R2QoaVSW5K43P9QgESgkU"
                 }
               ],
               "services": {
@@ -67,13 +67,16 @@ jobs:
       with:
         gradle-version: '9.3.1'
 
+    - name: Install Virtual Display (Xvfb)
+      run: sudo apt-get update && sudo apt-get install -y xvfb
+
     - name: Build Debug APK
       working-directory: project
-      run: gradle assembleDebug --stacktrace
+      run: xvfb-run gradle assembleDebug --stacktrace
 
     - name: Upload APK
       uses: actions/upload-artifact@v7
       with:
-        name: AKINHUB-APK  # <--- Yahan aap APK ka naam apne hisab se badal sakte hain
+        name: Akash-Internet-Hub-APK
         path: project/app/build/outputs/apk/debug/*.apk
         archive: false
